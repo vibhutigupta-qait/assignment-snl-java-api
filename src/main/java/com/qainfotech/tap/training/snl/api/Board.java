@@ -33,7 +33,7 @@ public class Board {
         data = BoardModel.data(uuid);
     }
     
-    /**
+    /**PlayerExistsException
      * access existing board object by uuid
      * @param uuid UUID of existing board
      * @throws IOException
@@ -100,7 +100,7 @@ public class Board {
         for(int i = 0; i < data.getJSONArray("players").length(); i++){
             JSONObject player = data.getJSONArray("players").getJSONObject(i);
             
-            if(player.getString("uuid").equals(playerUuid.toString())){
+            if(player.get("uuid").toString().equals(playerUuid.toString())){
                 data.getJSONArray("players").remove(i);
                 data.put("turn", 0);
                 BoardModel.save(uuid, data);
@@ -133,6 +133,7 @@ public class Board {
             
             Integer dice = new Random().nextInt(6) + 1;
             Integer currentPosition = player.getInt("position");
+           
             Integer newPosition = currentPosition + dice;
             String message = "";
             String playerName = player.getString("name");
